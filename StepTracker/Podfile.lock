@@ -1,0 +1,15 @@
+PODS:
+  - SnapKit (3.2.0)
+  - Timepiece (1.1.0)
+
+DEPENDENCIES:
+  - SnapKit (~> 3.2.0)
+  - Timepiece
+
+SPEC CHECKSUMS:
+  SnapKit: 1ca44df72cfa543218d177cb8aab029d10d86ea7
+  Timepiece: 4190a7bc5ae1c05c87531fd75b14e17d2a017902
+
+PODFILE CHECKSUM: 9dc1c1e10b8da6e8c26ee1c66c8d292a74a8d631
+
+COCOAPODS: 1.2.0.beta.1

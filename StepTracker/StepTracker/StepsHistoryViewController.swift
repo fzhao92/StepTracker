@@ -26,6 +26,8 @@ class StepsHistoryViewController: UIViewController {
         
         super.viewDidLoad()
         
+        navigationController?.navigationBar.topItem?.title = "Steps History Data"
+        
         addObserver(self, forKeyPath: #keyPath(pedometer.reloadDataRequired), options: [.new], context: nil)
         view.backgroundColor = .white
         
@@ -79,8 +81,19 @@ class StepsHistoryViewController: UIViewController {
 
 extension StepsHistoryViewController: UITableViewDelegate {
     
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
+        let dailyActivity = pedometer.activityHistory[indexPath.row]
+        let detailVC = DetailViewController()
+        detailVC.dailyActivity = dailyActivity
+        navigationController?.pushViewController(detailVC, animated: true)
+        
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        
         return 100
+        
     }
     
 }
@@ -88,22 +101,32 @@ extension StepsHistoryViewController: UITableViewDelegate {
 extension StepsHistoryViewController: UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        
         return 1
+        
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        
         return pedometer.activityHistory.count
+        
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let activity = pedometer.activityHistory[indexPath.row]
         var cell = tableView.dequeueReusableCell(withIdentifier: reuseId)
+        
         if cell == nil {
-            cell = UITableViewCell(style: .subtitle, reuseIdentifier: reuseId)
+            cell = UITableViewCell(style: .value1, reuseIdentifier: reuseId)
         }
-        cell!.textLabel?.text = activity.getDateStr()
-        cell?.detailTextLabel?.text = activity.getStepCountStr()
+        
+        cell?.accessoryType = .disclosureIndicator
+        cell?.textLabel?.text = activity.getDateStr()
+        cell?.detailTextLabel?.text = "\(activity.getStepCountStr()) steps"
+        
         return cell!
+        
     }
     
 }

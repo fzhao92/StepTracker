@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		3F23F7F41F0C7F730047B868 /* DetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F23F7F31F0C7F730047B868 /* DetailViewController.swift */; };
+		3F23F7F61F0C82180047B868 /* InfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F23F7F51F0C82180047B868 /* InfoView.swift */; };
 		3F256A321F0706960019C6CF /* DailyActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F256A311F0706960019C6CF /* DailyActivity.swift */; };
 		3F632F4F1F06F72000E544A8 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F632F4E1F06F72000E544A8 /* AppDelegate.swift */; };
 		3F632F511F06F72000E544A8 /* StepsHistoryViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3F632F501F06F72000E544A8 /* StepsHistoryViewController.swift */; };
@@ -17,6 +19,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		3F23F7F31F0C7F730047B868 /* DetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DetailViewController.swift; sourceTree = "<group>"; };
+		3F23F7F51F0C82180047B868 /* InfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfoView.swift; sourceTree = "<group>"; };
 		3F256A311F0706960019C6CF /* DailyActivity.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DailyActivity.swift; sourceTree = "<group>"; };
 		3F632F4B1F06F72000E544A8 /* StepTracker.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StepTracker.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		3F632F4E1F06F72000E544A8 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -50,6 +54,47 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		3F23F7F71F0C8AA70047B868 /* View Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3F632F501F06F72000E544A8 /* StepsHistoryViewController.swift */,
+				3F23F7F31F0C7F730047B868 /* DetailViewController.swift */,
+			);
+			name = "View Controllers";
+			sourceTree = "<group>";
+		};
+		3F23F7F81F0C8AB60047B868 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				3F23F7F51F0C82180047B868 /* InfoView.swift */,
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
+		3F23F7F91F0C8AC30047B868 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3F256A311F0706960019C6CF /* DailyActivity.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		3F23F7FA1F0C8ACA0047B868 /* Data Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				3F632F601F06FB6500E544A8 /* Pedometer.swift */,
+			);
+			name = "Data Controllers";
+			sourceTree = "<group>";
+		};
+		3F23F7FB1F0C8AD40047B868 /* AppDelegate */ = {
+			isa = PBXGroup;
+			children = (
+				3F632F4E1F06F72000E544A8 /* AppDelegate.swift */,
+			);
+			name = AppDelegate;
+			sourceTree = "<group>";
+		};
 		3F632F421F06F72000E544A8 = {
 			isa = PBXGroup;
 			children = (
@@ -71,13 +116,14 @@
 		3F632F4D1F06F72000E544A8 /* StepTracker */ = {
 			isa = PBXGroup;
 			children = (
-				3F632F4E1F06F72000E544A8 /* AppDelegate.swift */,
-				3F632F501F06F72000E544A8 /* StepsHistoryViewController.swift */,
+				3F23F7FB1F0C8AD40047B868 /* AppDelegate */,
+				3F23F7F71F0C8AA70047B868 /* View Controllers */,
 				3F632F551F06F72000E544A8 /* Assets.xcassets */,
 				3F632F571F06F72000E544A8 /* LaunchScreen.storyboard */,
 				3F632F5A1F06F72000E544A8 /* Info.plist */,
-				3F632F601F06FB6500E544A8 /* Pedometer.swift */,
-				3F256A311F0706960019C6CF /* DailyActivity.swift */,
+				3F23F7FA1F0C8ACA0047B868 /* Data Controllers */,
+				3F23F7F91F0C8AC30047B868 /* Models */,
+				3F23F7F81F0C8AB60047B868 /* Views */,
 			);
 			path = StepTracker;
 			sourceTree = "<group>";
@@ -216,7 +262,9 @@
 			files = (
 				3F632F511F06F72000E544A8 /* StepsHistoryViewController.swift in Sources */,
 				3F632F4F1F06F72000E544A8 /* AppDelegate.swift in Sources */,
+				3F23F7F41F0C7F730047B868 /* DetailViewController.swift in Sources */,
 				3F256A321F0706960019C6CF /* DailyActivity.swift in Sources */,
+				3F23F7F61F0C82180047B868 /* InfoView.swift in Sources */,
 				3F632F611F06FB6500E544A8 /* Pedometer.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

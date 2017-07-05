@@ -51,12 +51,25 @@ class Pedometer: NSObject {
                             if let data = data {
                                 
                                 var currDayActivity = DailyActivity(startDate: startDate, endDate: endDate)
+                                
                                 currDayActivity.stepCount = data.numberOfSteps
+                                
                                 if let distance = data.distance {
                                     currDayActivity.distance = distance
                                 } else {
                                     currDayActivity.distance = 0
                                 }
+                                if let ascended = data.floorsAscended {
+                                    currDayActivity.floorsAscended = ascended
+                                } else {
+                                    currDayActivity.floorsAscended = 0
+                                }
+                                if let descended = data.floorsDescended {
+                                    currDayActivity.floorsDescended = descended
+                                } else {
+                                    currDayActivity.floorsDescended = 0
+                                }
+                                
                                 tempActivities.append(currDayActivity)
                                 
                             }else {

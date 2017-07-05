@@ -23,12 +23,16 @@ struct DailyActivity {
         distance = NSNumber()
     }
     
-    func formatDate() -> String {
+    func getDateStr() -> String {
         
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE, MMM d, yyyy"
         return dateFormatter.string(from: startDate)
         
+    }
+    
+    func getStepCountStr() -> String {
+        return "\(stepCount.intValue) steps"
     }
     
 }

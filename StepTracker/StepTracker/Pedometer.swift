@@ -10,108 +10,82 @@ import Foundation
 import CoreMotion
 import Timepiece
 
+let pedometer = CMPedometer()
 
-class Pedometer {
-    
-    let pedometer = CMPedometer()
+
+class Pedometer: NSObject {
 
     var activityHistory = [DailyActivity]()
     
     dynamic var reloadDataRequired = false
     
-    func startTrackingSteps() {
-        
-        var cal = Calendar.current
-        var comps = cal.dateComponents([.year, .month, .day, .hour, .minute, .second], from: Date())
-        comps.hour = 0
-        comps.minute = 0
-        comps.second = 0
-        let timeZone = TimeZone.current
-        cal.timeZone = timeZone
-        
-        let midnightOfToday = cal.date(from: comps)!
+    func retrieveSteps(forPastXDays days: Int) {
         
         if CMPedometer.isStepCountingAvailable() {
             
-            pedometer.startUpdates(from: midnightOfToday) { (data, error) in
+            let concurrentQueue: DispatchQueue = DispatchQueue.global(qos: .background)
+            
+            concurrentQueue.async {
                 
-                if let data = data {
+                var tempActivities = [DailyActivity]()
+                let queryGroup = DispatchGroup()
+                
+                concurrentQueue.sync {
                     
-                    print(data.numberOfSteps)
-                    
-                } else {
-                    
-                    if let error = error {
+                    for day in 0..<days {
                         
-                        print("Error getting data: \(error)")
+                        // get "x days" from today
+                        guard let startDate = Date.today() - day.day else {
+                            fatalError("Start date calculation error")
+                        }
                         
-                    } else {
+                        //get "1 day" after startdate
+                        guard let  endDate = startDate + 1.day else {
+                            fatalError("End date calculation error")
+                        }
                         
-                        print("Error getting data: unknown")
+                        queryGroup.enter()
+                        
+                        pedometer.queryPedometerData(from: startDate, to: endDate, withHandler: { (data, error) in
+                            
+                            if let data = data {
+                                
+                                var currDayActivity = DailyActivity(startDate: startDate, endDate: endDate)
+                                currDayActivity.stepCount = data.numberOfSteps
+                                if let distance = data.distance {
+                                    currDayActivity.distance = distance
+                                } else {
+                                    currDayActivity.distance = 0
+                                }
+                                tempActivities.append(currDayActivity)
+                                
+                            }else {
+                                
+                                if let error = error {
+                                    print("Error fetching steps data: \(error.localizedDescription)")
+                                } else {
+                                    print("Error fetching steps data: Unknown error")
+                                }
+                                
+                            }
+                            queryGroup.leave()
+                        })
                         
                     }
                     
                 }
                 
+                queryGroup.notify(queue: DispatchQueue.main, execute: {
+                    self.activityHistory = tempActivities
+                    self.reloadDataRequired = true
+                })
+
             }
             
         }
-        
-    }
-    
-    func retrieveSteps(forPastXDays days: Int) {
-        
-        let concurrentQueue: DispatchQueue = DispatchQueue.global()
-        
-        concurrentQueue.async {
+        else {
             
-            var tempActivities = [DailyActivity]()
-            
-            concurrentQueue.sync {
-                for day in 0...days {
-                    
-                    // get "x days" from today
-                    guard let startDate = Date.today() - day.day else {
-                        fatalError("Start date calculation error")
-                    }
-                    
-                    //get "1 day" after startdate
-                    guard let  endDate = startDate + 1.day else {
-                        fatalError("End date calculation error")
-                    }
-                    
-                    var currDayActivity = DailyActivity(startDate: startDate, endDate: endDate)
-                    
-                    self.pedometer.queryPedometerData(from: startDate, to: endDate, withHandler: { (data, error) in
-                        
-                        if let data = data {
-                            
-                            currDayActivity.stepCount = data.numberOfSteps
-                            if let distance = data.distance {
-                                currDayActivity.distance = distance
-                            } else {
-                                currDayActivity.distance = 0
-                            }
-                            
-                            tempActivities.append(currDayActivity)
-                            
-                        }else {
-                            if let error = error {
-                                print("Error fetching steps data: \(error.localizedDescription)")
-                            } else {
-                                print("Error fetching steps data: Unknown error")
-                            }
-                        }
-                    })
-                    
-                }
-                
-            }
-            
-            concurrentQueue.sync {
-                self.activityHistory = tempActivities
-                self.reloadDataRequired = true
-            }
+            print("Step counting not available")
             
         }
         
